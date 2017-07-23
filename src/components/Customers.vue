@@ -11,12 +11,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="(customer, index) in customers">
+            <tr :key="customer.id" v-for="customer in customers">
                 <td>{{customer.firstName}}</td>
                 <td>{{customer.lastName}}</td>
                 <td>{{customer.email}}</td>
                 <td>
-                    <router-link :to="{name: 'customer', params: { id: index }}"></router-link>
+                    <router-link :to="{name: 'Customer', params: { id: customer.id }}">View</router-link>
                 </td>
             </tr>
             </tbody>
@@ -26,44 +26,29 @@
 
 <script>
     import Alert from './Alert.vue';
+    import { mapActions, mapState } from 'vuex';
 
     export default {
         name: 'customers',
         data() {
             return {
-                customers: [],
                 alert: ''
             }
         },
-        methods: {
-            fetchCustomers() {
-                return this.$http.get('https://jsonplaceholder.typicode.com/users')
-                    .then(responce => responce.json())
-                    .then(data => {
-                        const newArr = data.map(item => {
-                            const [firstName, lastName] = item.name.split(' ');
-
-                            return {
-                                ...item,
-                                firstName,
-                                lastName
-                            }
-                        });
-                        this.customers = newArr;
-//                        console.log(this.customers);
-                    });
-            }
+        computed: {
+            ...mapState(['customers', 'someText', 'count'])
         },
-        created: function () {
+        methods: {
+            ...mapActions(['getCustomers'])
+        },
+        created() {
+            console.log(mapActions);
+
             if (this.$route.query.alert) {
                 this.alert = this.$route.query.alert
             }
-
-            this.fetchCustomers();
+            if (!this.customers.length) this.getCustomers();
         },
-//        updated: function () {
-//            this.fetchCustomers();
-//        }
         components: {
             Alert: Alert
         }

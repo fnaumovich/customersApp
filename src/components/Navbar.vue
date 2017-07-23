@@ -12,11 +12,11 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li @click="setActive('customers')" :class="{ active:isActive('customers') }"><router-link to="/">Customers</router-link></li>
-                    <li @click="setActive('about')" :class="{ active:isActive('about') }"><router-link to="/about">About</router-link></li>
+                    <li><router-link to="/">Customers</router-link></li>
+                    <li><router-link to="/about">About</router-link></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li @click="setActive('add')" :class="{ active:isActive('add') }"><router-link to="/add">Add Customer</router-link></li>
+                    <li><router-link to="/add">Add Customer</router-link></li>
                 </ul>
             </div>
         </div>
@@ -41,3 +41,9 @@
         }
     }
 </script>
+<style lang="scss">
+.router-link-exact-active {
+    background-color: #ccc !important;
+}
+
+</style>

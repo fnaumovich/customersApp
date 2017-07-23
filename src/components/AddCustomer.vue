@@ -1,7 +1,7 @@
 <template>
     <div class="add container">
         <h1 class="page-header">Add Customer</h1>
-        <form v-on:submit="addCustomer">
+        <form v-on:submit="handleCustomerButton">
             <div class="well" :class="{ 'has-error': hasError }">
                 <h4>Customer Info</h4>
                 <div class="form-group">
@@ -46,8 +46,10 @@
 </template>
 
 <script>
+    import { mapActions } from 'vuex';
+
     export default {
-        name: 'add',
+        name: 'form-add-customer',
         data() {
             return {
                 customer: {},
@@ -55,31 +57,43 @@
             }
         },
         methods: {
-            addCustomer(e) {
+            ...mapActions(['addCustomer']),
+            handleCustomerButton(e) {
+                e.preventDefault();
+
                 if (!this.customer.firstName || !this.customer.lastName) {
                     console.log('Заполните поля');
-                    e.preventDefault();
-                } else {
-                    const newCustomer = {
-                        firstName: this.customer.firstName,
-                        lastName: this.customer.lastName,
-                        email: this.customer.email,
-                        phone: this.customer.phone,
-                        address: this.customer.address,
-                        city: this.customer.city,
-                        state: this.customer.state
-                    };
-
-                    this.$router.push(
-                        {
-                            path: '/',
-                            query: {
-                                alert: 'Customer Added'
-                            }
-                        }
-                    )
+                    return;
                 }
-                e.preventDefault();
+
+                const {
+                    firstName,
+                    lastName,
+                    email,
+                    phone,
+                    address,
+                    city,
+                    state
+                } = this.customer;
+
+                this.addCustomer({
+                    firstName,
+                    lastName,
+                    email,
+                    phone,
+                    address,
+                    city,
+                    state
+                })
+
+                this.$router.push(
+                    {
+                        path: '/'
+                        // query: {
+                        //     alert: 'Customer Added'
+                        // }
+                    }
+                )
             }
         }
     }

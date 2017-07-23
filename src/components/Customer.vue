@@ -1,10 +1,11 @@
 <template>
     <div class="customer container">
-        <h1 class="page-header">Customer</h1>
+        <h1 class="page-header">{{ customerName }}</h1>
     </div>
 </template>
 
 <script>
+    import { mapState, mapActions } from 'vuex';
     export default {
         name: 'customer',
         data() {
@@ -12,9 +13,20 @@
 
             }
         },
+        methods: {
+            ...mapActions(['getCustomers'])
+        },
+        computed: {
+            ...mapState(['customers']),
+            customerName() {
+                return this.customers[this.customerId] && this.customers[this.customerId].name;
+            },
+            customerId() {
+                return this.$route.params.id;
+            }
+        },
         created: function () {
-            let customerId = this.$route.params.id;
-
+            this.getCustomers();
         }
     }
 </script>
