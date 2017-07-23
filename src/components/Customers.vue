@@ -1,5 +1,6 @@
 <template>
     <div class="customers container">
+        <Alert v-if="alert" v-bind:message="alert"></Alert>
         <h1 class="page-header">Manage Customers</h1>
         <table class="table table-striped">
             <thead>
@@ -10,10 +11,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="customer in customers">
+            <tr v-for="(customer, index) in customers">
                 <td>{{customer.firstName}}</td>
                 <td>{{customer.lastName}}</td>
                 <td>{{customer.email}}</td>
+                <td>
+                    <router-link :to="{name: 'customer', params: { id: index }}"></router-link>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -21,11 +25,14 @@
 </template>
 
 <script>
+    import Alert from './Alert.vue';
+
     export default {
         name: 'customers',
         data() {
             return {
-                customers: []
+                customers: [],
+                alert: ''
             }
         },
         methods: {
@@ -43,12 +50,22 @@
                             }
                         });
                         this.customers = newArr;
-                        console.log(this.customers);
+//                        console.log(this.customers);
                     });
             }
         },
         created: function () {
+            if (this.$route.query.alert) {
+                this.alert = this.$route.query.alert
+            }
+
             this.fetchCustomers();
+        },
+//        updated: function () {
+//            this.fetchCustomers();
+//        }
+        components: {
+            Alert: Alert
         }
     }
 </script>

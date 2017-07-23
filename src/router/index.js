@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import Customers from '@/components/Customers';
+import Customer from '@/components/Customer';
 import AddCustomer from '@/components/AddCustomer';
 import About from '@/components/About';
 
@@ -23,6 +24,11 @@ export default new Router({
             path: '/add',
             name: 'AddCustomer',
             component: AddCustomer
+        },
+        {
+            path: '/customer:id',
+            name: 'Customer',
+            component: Customer
         }
     ]
 });

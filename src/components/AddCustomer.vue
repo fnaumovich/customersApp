@@ -2,7 +2,7 @@
     <div class="add container">
         <h1 class="page-header">Add Customer</h1>
         <form v-on:submit="addCustomer">
-            <div class="well">
+            <div class="well" :class="{ 'has-error': hasError }">
                 <h4>Customer Info</h4>
                 <div class="form-group">
                     <label>First Name</label>
@@ -50,18 +50,34 @@
         name: 'add',
         data() {
             return {
-                customer: {}
+                customer: {},
+                hasError: false
             }
         },
         methods: {
             addCustomer(e) {
                 if (!this.customer.firstName || !this.customer.lastName) {
-                    console.log();
+                    console.log('Заполните поля');
                     e.preventDefault();
                 } else {
                     const newCustomer = {
+                        firstName: this.customer.firstName,
+                        lastName: this.customer.lastName,
+                        email: this.customer.email,
+                        phone: this.customer.phone,
+                        address: this.customer.address,
+                        city: this.customer.city,
+                        state: this.customer.state
+                    };
 
-                    }
+                    this.$router.push(
+                        {
+                            path: '/',
+                            query: {
+                                alert: 'Customer Added'
+                            }
+                        }
+                    )
                 }
                 e.preventDefault();
             }
