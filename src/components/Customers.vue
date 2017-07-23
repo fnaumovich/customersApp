@@ -33,16 +33,6 @@
                 return this.$http.get('https://jsonplaceholder.typicode.com/users')
                     .then(responce => responce.json())
                     .then(data => {
-                        /*
-                        let nameArr = [];
-                        data.forEach(item => {
-                            const obj = {};
-                            obj.firstName = item.name.split(' ')[0];
-                            obj.lastName = item.name.split(' ')[1];
-
-                            nameArr.push(obj);
-                        });
-                        */
                         const newArr = data.map(item => {
                             const [firstName, lastName] = item.name.split(' ');
 
@@ -54,7 +44,7 @@
                         });
                         this.customers = newArr;
                         console.log(this.customers);
-                    })
+                    });
             }
         },
         created: function () {
