@@ -1,6 +1,6 @@
 <template>
     <div class="customer container">
-        <h1 class="page-header">{{ customerName }}</h1>
+        <h1 class="page-header">{{ ourCustomer.name }}</h1>
     </div>
 </template>
 
@@ -10,23 +10,28 @@
         name: 'customer',
         data() {
             return {
-
             }
         },
         methods: {
-            ...mapActions(['getCustomers'])
+            ...mapActions(['getCustomers', 'getOurCustomer']),
+            fetchCustomers(customerId) {
+                if (this.customers.find(({ id }) => id === customerId)) return;
+
+                this.getOurCustomer(customerId);
+            }
         },
         computed: {
             ...mapState(['customers']),
-            customerName() {
-                return this.customers[this.customerId] && this.customers[this.customerId].name;
+            ourCustomer() {
+                const result = this.customers.find(({ id }) => id === parseInt(this.customerId));
+                return result || {};
             },
             customerId() {
                 return this.$route.params.id;
             }
         },
-        created: function () {
-            this.getCustomers();
+        created() {
+            this.fetchCustomers(this.customerId);
         }
     }
 </script>

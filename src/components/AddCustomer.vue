@@ -79,11 +79,13 @@
                 this.addCustomer({
                     firstName,
                     lastName,
+                    name: `${firstName} ${lastName}`,
                     email,
                     phone,
                     address,
                     city,
-                    state
+                    state,
+                    created: true
                 })
 
                 this.$router.push(

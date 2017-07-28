@@ -18,6 +18,7 @@
                 <td>
                     <router-link :to="{name: 'Customer', params: { id: customer.id }}">View</router-link>
                 </td>
+                <td><button class="btn btn-danger" @click="deleteCustomer(customer)">Delete</button></td>
             </tr>
             </tbody>
         </table>
@@ -36,18 +37,18 @@
             }
         },
         computed: {
-            ...mapState(['customers', 'someText', 'count'])
+            ...mapState(['customers', 'someText', 'count', 'isFetched'])
         },
         methods: {
-            ...mapActions(['getCustomers'])
+            ...mapActions(['getCustomers', 'deleteCustomer'])
         },
         created() {
-            console.log(mapActions);
-
             if (this.$route.query.alert) {
                 this.alert = this.$route.query.alert
             }
-            if (!this.customers.length) this.getCustomers();
+            if (!this.isFetched) {
+                this.getCustomers();
+            }
         },
         components: {
             Alert: Alert

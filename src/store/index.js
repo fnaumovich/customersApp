@@ -1,21 +1,26 @@
 export default {
     state: {
-        count: 0,
-        someText: 'Жопа',
-        customers: []
+        customers: [],
+        isFetched: false
     },
     mutations: {
-        increment(state) {
-            state.count++;
+        setCustomers(state, newCustomers) {
+            state.customers = newCustomers.reduce((customers, newCustomer) => {
+                if (customers.find(({ id }) => id === newCustomer.id)) return customers;
+
+                customers.push(newCustomer);
+                return customers;
+            }, state.customers);
         },
-        decrement(state) {
-            state.count--;
+        addCustomer(state, newCustomer) {
+            newCustomer.id = (new Date).getTime();
+            state.customers.push(newCustomer);
         },
-        setCustomers(state, customers) {
-            state.customers = customers;
+        deleteCustomer(state, customer) {
+            state.customers.splice(state.customers.indexOf(customer), 1)
         },
-        addCustomer(state, customer) {
-            state.customers.push(customer)
+        setFetchStatus(state) {
+            state.isFetched = true;
         }
     },
     actions: {
@@ -23,6 +28,8 @@ export default {
             window.fetch('https://jsonplaceholder.typicode.com/users')
                 .then(responce => responce.json())
                 .then(data => {
+                    context.commit('setFetchStatus');
+
                     return data.map(item => {
                         const [firstName, lastName] = item.name.split(' ');
 
@@ -35,8 +42,25 @@ export default {
                 })
                 .then(data => context.commit('setCustomers', data))
         },
+        getOurCustomer(context, id) {
+            window.fetch('https://jsonplaceholder.typicode.com/users/' + id)
+                .then(response => response.json())
+                .then(item => {
+                    const [firstName, lastName] = item.name.split(' ');
+
+                    return {
+                        ...item,
+                        firstName,
+                        lastName
+                    }
+                })
+                .then(data => context.commit('setCustomers', [data]))
+        },
         addCustomer(context, customer) {
-            context.commit('addCustomer', customer);
+            context.commit('addCustomer', customer)
+        },
+        deleteCustomer(context, customer) {
+            context.commit('deleteCustomer', customer)
         }
     }
 };
