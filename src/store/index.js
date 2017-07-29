@@ -17,10 +17,14 @@ export default {
             state.customers.push(newCustomer);
         },
         updateCustomer(state, customer) {
-
+            const key = state.customers.findIndex(({ id }) => id === customer.id);
+            state.customers[key] = customer;
         },
-        deleteCustomer(state, customer) {
-            state.customers.splice(state.customers.indexOf(customer), 1);
+        deleteCustomer(state, params) {
+            state.customers.splice(state.customers.findIndex(({ id }) => id === params.customerId), 1);
+            if (params.callback && typeof params.callback === 'function') {
+                params.callback();
+            }
         },
         setFetchStatus(state) {
             state.isFetched = true;

@@ -18,7 +18,7 @@
                 <td>
                     <router-link :to="{name: 'Customer', params: { id: customer.id }}" class="btn btn-default">View</router-link>
                 </td>
-                <td><button class="btn btn-danger" @click="deleteCustomer(customer)">Delete</button></td>
+                <td><button class="btn btn-danger" @click="deleteCustomer({ customerId: customer.id })">Delete</button></td>
             </tr>
             </tbody>
         </table>
