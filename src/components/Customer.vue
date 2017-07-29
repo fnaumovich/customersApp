@@ -1,19 +1,34 @@
 <template>
     <div class="customer container">
-        <h1 class="page-header">{{ ourCustomer.name }}</h1>
+        <router-link to="/">Back</router-link>
+        <h1 class="page-header">{{ ourCustomer.name }}
+            <span class="pull-right">
+                <router-link :to="{name: 'EditCustomer', params: {id: ourCustomer.id}}" class="btn btn-default">Edit</router-link>
+                <button class="btn btn-danger" @click="deleteCustomer(ourCustomer)">Delete</button>
+            </span>
+        </h1>
+        <ul class="list-group">
+            <li class="list-group-item"><span class="glyphicon glyphicon-phone" aria-hidden="true"></span> {{ourCustomer.phone}}</li>
+            <li class="list-group-item"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> {{ourCustomer.email}}</li>
+        </ul>
+
+        <ul class="list-group">
+            <li class="list-group-item"> {{ourCustomer.username}}</li>
+            <li class="list-group-item">{{ourCustomer.website}}</li>
+        </ul>
     </div>
 </template>
 
 <script>
     import { mapState, mapActions } from 'vuex';
+
     export default {
         name: 'customer',
         data() {
-            return {
-            }
+            return {}
         },
         methods: {
-            ...mapActions(['getCustomers', 'getOurCustomer']),
+            ...mapActions(['getCustomers', 'getOurCustomer', 'deleteCustomer']),
             fetchCustomers(customerId) {
                 if (this.customers.find(({ id }) => id === customerId)) return;
 

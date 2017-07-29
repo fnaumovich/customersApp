@@ -16,7 +16,7 @@
                 <td>{{customer.lastName}}</td>
                 <td>{{customer.email}}</td>
                 <td>
-                    <router-link :to="{name: 'Customer', params: { id: customer.id }}">View</router-link>
+                    <router-link :to="{name: 'Customer', params: { id: customer.id }}" class="btn btn-default">View</router-link>
                 </td>
                 <td><button class="btn btn-danger" @click="deleteCustomer(customer)">Delete</button></td>
             </tr>
@@ -37,7 +37,7 @@
             }
         },
         computed: {
-            ...mapState(['customers', 'someText', 'count', 'isFetched'])
+            ...mapState(['customers', 'isFetched'])
         },
         methods: {
             ...mapActions(['getCustomers', 'deleteCustomer'])

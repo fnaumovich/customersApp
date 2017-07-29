@@ -3,6 +3,7 @@ import Router from 'vue-router';
 
 import Customers from '@/components/Customers';
 import Customer from '@/components/Customer';
+import EditCustomer from '@/components/EditCustomer';
 import AddCustomer from '@/components/AddCustomer';
 import About from '@/components/About';
 
@@ -29,6 +30,11 @@ export default new Router({
             path: '/customers/:id',
             name: 'Customer',
             component: Customer
+        },
+        {
+            path: '/customer/:id',
+            name: 'EditCustomer',
+            component: EditCustomer
         }
     ]
 });

@@ -25,23 +25,11 @@
 
 <script>
     export default {
-        name: 'navbar',
-        data() {
-            return {
-                activeItem: 'customers'
-            }
-        },
-        methods: {
-            isActive: function (menuItem) {
-                return this.activeItem === menuItem
-            },
-            setActive: function (menuItem) {
-                this.activeItem = menuItem // no need for Vue.set()
-            }
-        }
+        name: 'navbar'
     }
 </script>
 <style lang="scss">
+
 .router-link-exact-active {
     background-color: #ccc !important;
 }

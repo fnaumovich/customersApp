@@ -16,8 +16,11 @@ export default {
             newCustomer.id = (new Date).getTime();
             state.customers.push(newCustomer);
         },
+        updateCustomer(state, customer) {
+
+        },
         deleteCustomer(state, customer) {
-            state.customers.splice(state.customers.indexOf(customer), 1)
+            state.customers.splice(state.customers.indexOf(customer), 1);
         },
         setFetchStatus(state) {
             state.isFetched = true;
@@ -58,6 +61,9 @@ export default {
         },
         addCustomer(context, customer) {
             context.commit('addCustomer', customer)
+        },
+        updateCustomer(context, customer) {
+            context.commit('updateCustomer', customer)
         },
         deleteCustomer(context, customer) {
             context.commit('deleteCustomer', customer)
