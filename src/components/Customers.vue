@@ -1,6 +1,5 @@
 <template>
     <div class="customers container">
-        <Alert v-if="alert" v-bind:message="alert"></Alert>
         <h1 class="page-header">Manage Customers</h1>
         <input type="text" class="form-control" placeholder="Enter customer name" v-model="filterInput">
         <br>
@@ -35,7 +34,6 @@
         name: 'customers',
         data() {
             return {
-                alert: '',
                 filterInput: ''
             }
         },
@@ -50,9 +48,6 @@
             }
         },
         created() {
-            if (this.$route.query.alert) {
-                this.alert = this.$route.query.alert
-            }
             if (!this.isFetched) {
                 this.getCustomers();
             }

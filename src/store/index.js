@@ -71,6 +71,13 @@ export default {
         },
         deleteCustomer(context, customer) {
             context.commit('deleteCustomer', customer)
+        },
+        saveData(data) {
+            const string = JSON.stringify(data);
+            localStorage.setItem('customer', data);
+        },
+        getData() {
+            return JSON.parse(localStorage.getItem('customer'));
         }
     }
 };
