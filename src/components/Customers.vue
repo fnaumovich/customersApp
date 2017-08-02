@@ -29,6 +29,7 @@
 <script>
     import Alert from './Alert.vue';
     import { mapActions, mapState } from 'vuex';
+    import localStorage from '@/services/local-storage';
 
     export default {
         name: 'customers',
@@ -43,8 +44,8 @@
         methods: {
             ...mapActions(['getCustomers', 'deleteCustomer']),
             filterBy(list, value) {
-                value = value.charAt(0).toUpperCase() + value.slice(1);
-                return list.filter(customer => customer.name.indexOf(value) > -1)
+                value = value.toLowerCase();
+                return list.filter(customer => customer.firstName.toLowerCase().indexOf(value) > -1)
             }
         },
         created() {

@@ -23,6 +23,14 @@
                     <label>Phone</label>
                     <input type="text" class="form-control" placeholder="Phone" v-model="currentCustomer.phone">
                 </div>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" class="form-control" placeholder="Username" v-model="currentCustomer.username">
+                </div>
+                <div class="form-group">
+                    <label>Website</label>
+                    <input type="text" class="form-control" placeholder="Website" v-model="currentCustomer.website">
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -43,6 +51,7 @@
                     lastName: '',
                     email: '',
                     phone: '',
+                    name: this.firstName + ' ' + this.lastName
                 }
             }
         },
@@ -58,7 +67,7 @@
                 this.$router.push('/');
             },
             setCustomerData() {
-                this.currentCustomer = this.ourCustomer
+                this.currentCustomer = this.ourCustomer;
             }
         },
         computed: {
@@ -76,7 +85,6 @@
                 if (!Object.keys(oldVal).length && newVal) {
                     this.setCustomerData();
                 }
-                console.log(newVal, oldVal);
             }
         },
         created() {

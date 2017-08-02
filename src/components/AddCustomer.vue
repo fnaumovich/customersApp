@@ -23,6 +23,14 @@
                     <label>Phone</label>
                     <input type="text" class="form-control" placeholder="Phone" v-model="customer.phone">
                 </div>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" class="form-control" placeholder="Username" v-model="customer.username">
+                </div>
+                <div class="form-group">
+                    <label>Website</label>
+                    <input type="text" class="form-control" placeholder="Website" v-model="customer.website">
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -54,7 +62,9 @@
                     firstName,
                     lastName,
                     email,
-                    phone
+                    phone,
+                    username,
+                    website
                 } = this.customer;
 
                 this.addCustomer({
@@ -63,15 +73,14 @@
                     name: `${firstName} ${lastName}`,
                     email,
                     phone,
+                    username,
+                    website,
                     created: true
                 });
 
                 this.$router.push(
                     {
                         path: '/'
-                        // query: {
-                        //     alert: 'Customer Added'
-                        // }
                     }
                 )
             }

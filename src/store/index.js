@@ -1,3 +1,5 @@
+import localStorage from '@/services/local-storage';
+
 export default {
     state: {
         customers: [],
@@ -31,23 +33,31 @@ export default {
         }
     },
     actions: {
+        setStorage(context) {
+            localStorage.setItem('customers', context.state.customers);
+        },
         getCustomers(context) {
-            window.fetch('https://jsonplaceholder.typicode.com/users')
-                .then(responce => responce.json())
-                .then(data => {
-                    context.commit('setFetchStatus');
+            const data = localStorage.getItem('customers');
+            if (data) {
+                context.commit('setCustomers', data);
+            } else {
+                window.fetch('https://jsonplaceholder.typicode.com/users')
+                    .then(responce => responce.json())
+                    .then(data => {
+                        context.commit('setFetchStatus');
 
-                    return data.map(item => {
-                        const [firstName, lastName] = item.name.split(' ');
+                        return data.map(item => {
+                            const [firstName, lastName] = item.name.split(' ');
 
-                        return {
-                            ...item,
-                            firstName,
-                            lastName
-                        }
-                    });
-                })
-                .then(data => context.commit('setCustomers', data))
+                            return {
+                                ...item,
+                                firstName,
+                                lastName
+                            }
+                        });
+                    })
+                    .then(data => context.commit('setCustomers', data))
+            }
         },
         getOurCustomer(context, id) {
             window.fetch('https://jsonplaceholder.typicode.com/users/' + id)
@@ -64,20 +74,16 @@ export default {
                 .then(data => context.commit('setCustomers', [data]))
         },
         addCustomer(context, customer) {
-            context.commit('addCustomer', customer)
+            context.commit('addCustomer', customer);
+            context.dispatch('setStorage');
         },
         updateCustomer(context, customer) {
-            context.commit('updateCustomer', customer)
+            context.commit('updateCustomer', customer);
+            context.dispatch('setStorage');
         },
         deleteCustomer(context, customer) {
-            context.commit('deleteCustomer', customer)
-        },
-        saveData(data) {
-            const string = JSON.stringify(data);
-            localStorage.setItem('customer', data);
-        },
-        getData() {
-            return JSON.parse(localStorage.getItem('customer'));
+            context.commit('deleteCustomer', customer);
+            context.dispatch('setStorage');
         }
     }
 };

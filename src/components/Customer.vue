@@ -13,8 +13,8 @@
         </ul>
 
         <ul class="list-group">
-            <li class="list-group-item"> {{ ourCustomer.username }}</li>
-            <li class="list-group-item">{{ ourCustomer.website }}</li>
+            <li class="list-group-item"><strong>Username:</strong> {{ ourCustomer.username }}</li>
+            <li class="list-group-item"><strong>Website:</strong> {{ ourCustomer.website }}</li>
         </ul>
     </div>
 </template>
